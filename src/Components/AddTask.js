@@ -8,9 +8,15 @@ const AddTask = ({onAdd}) => {
     
     
     const onSubmit = (e) => {
-        console.log(e);
+        
        
         e.preventDefault();
+
+        if(!text) {
+            alert("Please add a certain task to continue ahead");
+            // If we don't return after the alert, the alert will be shown but the empty task field will still be added.
+            return;
+        }
         
 
         onAdd({text, day, reminder});

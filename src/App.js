@@ -6,6 +6,8 @@ import AddTask from './Components/AddTask'
 
 
 function App() {
+  const [open, setOpen] = useState(false);
+
   const [tasks, setTasks] = useState(
     [
     
@@ -64,6 +66,7 @@ const addTask = (task) => {
 
 const ToggleReminder = (id) => {
   //At beggining every task is true, meaning every task gets border left as green.
+  //if task.id=== id then it is going to return the copy of all the task again and set reminder to opposte of what it was.
   setTasks(tasks.map((task) => 
    task.id === id ? {...task, reminder: !task.reminder} : task
   
@@ -78,8 +81,9 @@ const ToggleReminder = (id) => {
   
   return (
     <div className='container'>
-    <Header title ='Task Tracker'/>
-    <AddTask onAdd = {addTask} />
+    <Header title ='Task Tracker' toggleAdd={() =>  setOpen(!open)}/>
+    {/* open && Addtask component is like a if statement. So at first the Addtask functionality is not being shown */}
+    {open && <AddTask onAdd = {addTask} />}
     {tasks.length>0 
     ?
     <Tasks tasks={tasks} onDelete={DeleteTask} onToggle={ToggleReminder} onAdd />

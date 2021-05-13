@@ -2,13 +2,13 @@ import React from 'react'
 import '../index.css'
 import Buttons from './Buttons'
 
-const Header = ({title}) => {
+const Header = ({title, toggleAdd}) => {
     return (
         //Way of using inline style in React
         // <div style={{color: 'red', backgroundColor: 'black'}}>
         <header className='header'>
         <h1>{title}</h1>
-        <Buttons text='Add' color='steelblue' />
+        <Buttons color="steelblue" text="add" onClick={toggleAdd}  />
             
         </header>
     )
