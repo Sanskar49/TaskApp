@@ -18,7 +18,7 @@ const AddTask = ({onAdd}) => {
             return;
         }
         
-
+        //text, day and reminder be the (task) you passed it on as arguement in the app addTaskfunction tho.
         onAdd({text, day, reminder});
 
         setText('');

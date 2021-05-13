@@ -1,46 +1,36 @@
 import './index.css'
 import Header from './Components/Header'
 import Tasks from './Components/Tasks'
-import {useState} from 'react'
+import {useState, useEffect} from 'react'
 import AddTask from './Components/AddTask'
 
 
 function App() {
   const [open, setOpen] = useState(false);
 
-  const [tasks, setTasks] = useState(
-    [
+  const [tasks, setTasks] = useState([]);
+  
+  useEffect(() => {
+    const getTask = async () => {
+      const Alltask = await fetchTask();
+
+      setTasks(Alltask);
+    }
     
-{
-    id:1,
-    text: 'Doctors Appointment',
-    day: 'May 03 at 2:30',
-    reminder: true,
+  
+    getTask();
+  }, [])
 
-},
-{
-    id:2,
-    text: 'Attend Classes',
-    day: 'May 06 at 9:00',
-    reminder: true,
+  // Asynchronous function enables to work with promises, they handle the responsibility of promises here.
+  const fetchTask = async () => {
+      const res = await fetch('http://localhost:5000/tasks');
+      const data = await res.json();
+      //This is returning data to getTask function inside useEffecct.
+      return data;
 
-},
-{
-    id:3,
-    text: 'Go to the gym',
-    day: 'May 07 at 5:30',
-    reminder: true,
+    }
 
-}, 
-{
-    id:4,
-    text: 'Guitar class',
-    day: 'May 08 at 3:30',
-    reminder: true,
 
-},
-]
-)
 //YES, id is is passed from Task component from an arrow function i.e. 
 //When you click on the cross button, you get an id and that id comes here.
 const DeleteTask = (id) => {
@@ -52,14 +42,30 @@ const DeleteTask = (id) => {
   )
 }
 
-const addTask = (task) => {
-  //Generating a random id for the newly added task
-  const id = Math.floor(Math.random() * 1000 +1);
+const addTask = async (task) => {
+  // //Generating a random id for the newly added task
+  // const id = Math.floor(Math.random() * 1000 +1);
 
-  const newTask = {id, ...task}
+  // const newTask = {id, ...task}
 
-  //Why did we use [] instead of {}
-  setTasks([...tasks, newTask])
+  // //Why did we use [] instead of {}
+  // setTasks([...tasks, newTask])
+   
+  const res = await fetch('http://localhost:5000/tasks', {
+        method: 'POST',
+        headers : {
+          "Content-Type": "application/json"
+        },
+        //if there is no body, only id gets stored in the fake database
+        body: JSON.stringify(task)
+
+
+
+  })
+  const data = await res.json();
+
+  setTasks([...tasks, data]);
+
 }
 
 

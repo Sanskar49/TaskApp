@@ -8,7 +8,7 @@ const Header = ({title, toggleAdd}) => {
         // <div style={{color: 'red', backgroundColor: 'black'}}>
         <header className='header'>
         <h1>{title}</h1>
-        <Buttons color="steelblue" text="add" onClick={toggleAdd}  />
+        <Buttons color="steelblue" text="Add" onClick={toggleAdd}  />
             
         </header>
     )
